@@ -1,0 +1,30 @@
+<div class="container col-9">
+  <h1>Orders</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead> 
+  <tbody *ngIf="orders">
+    <tr *ngFor="let order of orders">
+      <td *ngIf="authService.user$ | async as user" class="col-5">{{ user.displayName }}</td>
+      <td>{{ order['payload'].toJSON()['dataPlaced'] | date}}</td>
+      <td class="text-right">
+        <a 
+          (click)="viewOrder(order['key'])"
+          data-toggle="tooltip" 
+          data-placement="top" 
+          title="View Order" ><i class="far fa-eye"></i></a>
+        <a 
+          (click)="deleteOrder(order['key'])"
+          data-toggle="tooltip" 
+          data-placement="top" 
+          title="Delete Order" ><i class="far fa-trash-alt"></i></a>
+      </td>
+    </tr>
+  </tbody> 
+</table>
+</div>

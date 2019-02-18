@@ -1,0 +1,19 @@
+<h1>Your Orders</h1>
+<div class="col-9">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="orders">
+      <tr *ngFor="let order of orders ">
+        <td>{{ order['payload'].toJSON()['dataPlaced'] | date }}</td>
+        <td class="text-right">
+          <button (click)="viewOrder(order.key)" class="btn btn-link btn-sm">View</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

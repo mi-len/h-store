@@ -1,0 +1,10 @@
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+button {
+  margin-left: 10px;
+}

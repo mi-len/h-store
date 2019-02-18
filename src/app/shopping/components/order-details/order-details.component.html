@@ -1,0 +1,87 @@
+<h2>Order Details</h2>
+<p *ngIf="order">
+  <i>Ordered on {{ order['dataPlaced'] | date }}</i>
+</p>
+<div class="row">
+  <div class="col-7">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Products</th>
+          <th class="text-right">Price</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="order">
+        <tr *ngFor="let item of this.items ">
+          <td>{{ item['quantity'] }} x {{ item['product']['title'] }}</td>
+          <td class="text-right">
+            {{ item['product']['price'] * item['quantity'] | currency:'USD'}}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="order">
+        <tr>
+          <th></th>
+          <th class="text-right">{{ this.order['totalPrice'] | currency }}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="col-5" *ngIf="this.order">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Shipping Address</h5>
+        <!-- <div class="row">
+            <div class="col-5">
+                <ul class="list-group list-group-flush" *ngIf="this.items">
+                    <li class="list-group-item"> 
+                      Name: 
+                    </li>
+                    <li class="list-group-item"> 
+                       City: 
+                    </li>
+                    <li class="list-group-item"> 
+                      Address:
+                    </li>
+                    <li class="list-group-item"> 
+                      Address:
+                    </li>
+                  </ul>
+            </div>
+            <div class="col-7">
+                <ul class="list-group list-group-flush" *ngIf="this.items">
+                    <li class="list-group-item"> 
+                      {{ order['shipping']['name'] }}
+                    </li>
+                    <li class="list-group-item"> 
+                      <span class="text-right inlineDiv">{{ order['shipping']['city'] }}</span>
+                    </li>
+                    <li class="list-group-item"> 
+                      {{ order['shipping']['addressLine1'] }}
+                    </li>
+                    <li class="list-group-item"> 
+                      {{ order['shipping']['addressLine2'] }}
+                    </li>
+                  </ul>
+            </div>
+          </div> -->
+        <ul class="list-group list-group-flush" *ngIf="this.items">
+          <li class="list-group-item">
+            <span class="labels">Name:</span> {{ order['shipping']['name'] }}
+          </li>
+          <li class="list-group-item">
+            <span class="labels">City:</span> {{ order['shipping']['city'] }}
+          </li>
+          <li class="list-group-item">
+            <span class="labels">Address:</span> {{ order['shipping']['addressLine1'] }}
+          </li>
+          <li class="list-group-item">
+            <span class="labels">Address:</span> {{ order['shipping']['addressLine2'] }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button (click)="deleteOrder()" class="btn btn-danger" *ngIf="this.isAdmin">Delete</button>

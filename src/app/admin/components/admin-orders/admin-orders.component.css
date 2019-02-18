@@ -1,0 +1,16 @@
+.far {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.fa-eye {
+  color: green;
+}
+
+.fa-eye:hover {
+  color: darkorange;
+}
+
+.fa-trash-alt:hover {
+  color: crimson;
+}

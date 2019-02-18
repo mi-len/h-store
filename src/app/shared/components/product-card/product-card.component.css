@@ -1,0 +1,9 @@
+img {
+  height: 170px;
+  width: auto;
+  object-fit: cover;
+}
+
+.card-footer {
+  padding: 0px;
+}

@@ -1,0 +1,52 @@
+<h1>Shopping Cart</h1>
+<div class="row col-10">
+  <p>
+    You have {{ this.shoppingCartService.countItems }} items in your shopping cart.
+    <button 
+    *ngIf="this.shoppingCartService.countItems > 0" 
+    (click)="this.shoppingCartService.clearCart()" 
+    class="btn btn-light btn-sm">
+    Clear Shopping Cart
+  </button>
+  </p>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Product</th>
+        <th style="width: 230px" class="text-center">Quantity</th>
+        <th style="width: 200 px" class="text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let id of this.productIds; let i = index">
+        <td><img [src]="this.products[id]['product']['imageUrl']" class="thumbnail" alt=""></td>
+        <td>{{ this.products[id]['product']['title'] }}</td>
+        <td>
+          <app-product-quantity [quantity]="this.products[id]['quantity']" [id]="id"></app-product-quantity>
+        </td>
+        <td 
+          class="text-right">
+          {{ this.products[id]['quantity'] * this.products[id]['product']['price'] | currency }}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="text-right">{{ this.totalPrice | currency }}</th>
+      </tr>
+    </tfoot>
+  </table>
+  <a 
+    routerLink="/check-out"
+    *ngIf="this.shoppingCartService.countItems > 0" 
+    class="btn btn-primary">
+    Check Out
+  </a>
+
+
+</div>

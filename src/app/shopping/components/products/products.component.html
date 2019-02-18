@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-3">
+    <app-product-filter [category]="category"></app-product-filter>
+  </div>
+  <div class="col-9">
+    <div class="card-container">
+      <ng-container *ngFor="let prod of filteredProducts">
+        <app-product-card [product]="prod" [shopping-cart]="this.cart.snapshotChanges()"></app-product-card>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
