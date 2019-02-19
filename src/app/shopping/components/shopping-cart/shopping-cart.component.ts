@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ShoppingCartService } from 'src/app/shared/services/shopping-cart.service';
-import { Observable, Subscription } from 'rxjs';
-import { AngularFireAction, DatabaseSnapshot } from 'angularfire2/database';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,7 +16,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   subscription: Subscription
   constructor(public shoppingCartService: ShoppingCartService) { 
     this.cartId = localStorage.getItem('cartId')
-
   }
 
   ngOnInit() {

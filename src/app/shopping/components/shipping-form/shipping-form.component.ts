@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class ShippingFormComponent implements OnInit, OnDestroy {
   shipping = {}; 
-  userId
+  userId: string
+  userName: string
   cart
   cart$
   cartSubscription: Subscription
@@ -29,7 +30,10 @@ export class ShippingFormComponent implements OnInit, OnDestroy {
     this.cart$ = await this.shoppingCartService.getCart()
     this.cartSubscription = this.cart$.valueChanges().subscribe(res => this.cart = res)
     this.shoppingCartService.getTotalPrice()
-    this.userSubscription = this.authService.user$.subscribe(user => this.userId = user.uid)
+    this.userSubscription = this.authService.user$.subscribe(user => {
+      this.userId = user.uid
+      this.userName = user.displayName
+    })
   }
 
   ngOnDestroy() {
@@ -41,6 +45,7 @@ export class ShippingFormComponent implements OnInit, OnDestroy {
   async placeOrder() {
     let order = {
       userId: this.userId,
+      userName: this.userName,
       dataPlaced: new Date().getTime(),
       shipping: this.shipping,
       items: this.cart['items'],

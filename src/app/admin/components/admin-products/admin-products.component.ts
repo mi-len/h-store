@@ -1,10 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ProductService } from 'src/app/shared/services/product.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { log } from 'util';
-import { map } from 'rxjs/operators';
-import { pipe, Subscription } from 'rxjs';
-import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from "angularfire2/firestore";
+import { Subscription } from 'rxjs';
+import { ProductService } from 'src/app/shared/services/product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -23,7 +20,6 @@ export class AdminProductsComponent implements OnDestroy {
     this.subscription = this.productService.getAll().snapshotChanges().subscribe(res => {
       this.products = this.filteredProducts = res
     })
-
   }
 
   ngOnDestroy() {

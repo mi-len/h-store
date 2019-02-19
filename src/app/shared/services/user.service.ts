@@ -4,6 +4,7 @@ import * as firebase from 'firebase'
 import { AppUser } from '../models/app-user';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class UserService {
       }
       this.userId = u.uid
       this.db.object('/users/' + this.userId).valueChanges().subscribe(x => {
-        this.isAdmin = x['isAdmin']
+        // this.isAdmin = x['isAdmin'] // uncomment for Admin check !!
+        this.isAdmin = true // temporary all user will will have admin rights 
       })
     })
   }
@@ -38,14 +40,29 @@ export class UserService {
     return this.db.object('/users/' + uid)
   }
 
+  async getUserName(id: string) {
+    await this.db.object('/users/' + id).valueChanges().subscribe(x => {
+      let name = x['name']
+      console.log('name: inside subscription', name);
+
+      return name
+    })
+    console.log('name after in serr=vice', name);
+    
+    // let name = await this.get(id).valueChanges()
+    // console.log('get returns ', name);
+    //  this.get(id)
+  }
+
   checkForAdmin() {
 
-    if (this.isAdmin) {
+    return true // temporary all user will will have admin rights 
 
-      return true
-    }
-    this.router.navigate(['/'])
-    return false
+    // if (this.isAdmin) {
+    //   return true
+    // }
+    // this.router.navigate(['/'])
+    // return false
 
   }
 }

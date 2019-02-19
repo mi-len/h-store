@@ -1,19 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFireDatabase, AngularFireObject, DatabaseSnapshot, AngularFireAction } from 'angularfire2/database';
-// import { create } from 'domain';
-import { take } from 'rxjs/operators'
-import { first } from 'rxjs/operators'
-import { Observable, Subscription } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
+// import { create } from 'domain';
 @Injectable({
   providedIn: 'root'
 })
-export class ShoppingCartService implements OnDestroy{
+export class ShoppingCartService implements OnDestroy {
   countItems: number
   totalPrice: number = 0
-  // cart
-  // subscription: Subscription
-  // productCount: number
+  totalPriceSubscription: Subscription
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -34,8 +31,9 @@ export class ShoppingCartService implements OnDestroy{
   }
 
   private getOrCreateCartId() {
+
     let cartId = localStorage.getItem('cartId')
-    if (!cartId) {
+    if (cartId === null) {
       this.create().then(result => {
         localStorage.setItem('cartId', result.key)
         return this.getCart()
@@ -48,29 +46,29 @@ export class ShoppingCartService implements OnDestroy{
   addToCart(product) {
     let cartId = this.getOrCreateCartId()
     let id = product.key
-    this.db.object('/shopping-carts/'+ cartId + '/items/' + id )
-            .update({product: product.payload.toJSON(), quantity: 1})
+    this.db.object('/shopping-carts/' + cartId + '/items/' + id)
+      .update({ product: product.payload.toJSON(), quantity: 1 })
   }
 
   async clearCart() {
     let cartId = await this.getOrCreateCartId()
-    this.db.object('/shopping-carts/' + cartId +'/items').remove()
+    this.db.object('/shopping-carts/' + cartId + '/items').remove()
   }
 
-  async updateItemQuantity(id, change, product?){ 
+  async updateItemQuantity(id, change, product?) {
 
     let cartId = await this.getOrCreateCartId()
 
-    this.db.object('/shopping-carts/'+ cartId + '/items/' + id )
+    this.db.object('/shopping-carts/' + cartId + '/items/' + id)
       .valueChanges()
       .pipe(take(1))
       .subscribe(res => {
-        if((res['quantity'] + change) === 0) {
-          this.db.object('/shopping-carts/'+ cartId + '/items/' + id )
+        if ((res['quantity'] + change) === 0) {
+          this.db.object('/shopping-carts/' + cartId + '/items/' + id)
             .remove() // remove item from cart if quantity is 0
         } else {
-          this.db.object('/shopping-carts/'+ cartId + '/items/' + id )
-            .update({quantity: res['quantity'] + change})
+          this.db.object('/shopping-carts/' + cartId + '/items/' + id)
+            .update({ quantity: res['quantity'] + change })
         }
       })
   }
@@ -86,23 +84,21 @@ export class ShoppingCartService implements OnDestroy{
   }
 
   getTotalPrice() {
-    this.getCart().valueChanges().subscribe(res=> {
+    this.getCart().valueChanges().subscribe(res => {
       let products = res['items']
       this.totalPrice = 0
-       for (const key in products) {
-          this.totalPrice += (products[key]['product']['price'] * products[key]['quantity'])
-        }
+      for (const key in products) {
+        this.totalPrice += (products[key]['product']['price'] * products[key]['quantity'])
+      }
     })
-   
-  
   }
-  
+
   testReturnInput(input) { // temp for del=+++=
     console.log('input: ', input);
     return input
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe()
+    this.totalPriceSubscription.unsubscribe()
   }
 }

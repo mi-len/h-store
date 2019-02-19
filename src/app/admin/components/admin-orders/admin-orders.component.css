@@ -14,3 +14,9 @@
 .fa-trash-alt:hover {
   color: crimson;
 }
+
+.oneR {
+  overflow: hidden;
+  white-space: nowrap;
+}
+

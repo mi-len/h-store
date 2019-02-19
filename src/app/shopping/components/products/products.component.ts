@@ -16,7 +16,8 @@ export class ProductsComponent implements OnDestroy {
   products: any[] = []
   filteredProducts: any[] = []
   category: string
-  subscription: Subscription
+  productSubscription: Subscription
+  querySubscription: Subscription
   cart
 
   constructor(
@@ -29,7 +30,7 @@ export class ProductsComponent implements OnDestroy {
   }
 
   populateProducts() {
-    this.productService.getAll().snapshotChanges().subscribe(res => {
+    this.productSubscription = this.productService.getAll().snapshotChanges().subscribe(res => {
       this.products = this.filteredProducts = res
 
       this.route.queryParamMap.subscribe(params => {
@@ -46,6 +47,7 @@ export class ProductsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    //  this.cart.unsubscribe() // ima problem tuk  TODO
+    //  this.productSubscription.unsubscribe() // ima problem tuk  TODOs
+    //  this.querySubscription.unsubscribe
   }
 }

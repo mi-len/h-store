@@ -20,17 +20,14 @@ export class HomeComponent implements OnInit {
 
   getNeshto() {
     
-    this.auth.user$.subscribe(u => {
-      this.userId = u.uid
-      console.log('uid > ', u.uid);
+    // this.auth.user$.subscribe(u => {
+    //   this.userId = u.uid
+    //   console.log('uid > ', u.uid);
 
-      this.userService.get(this.userId).valueChanges().subscribe(x=>{
-        console.log(x.isAdmin);
-      })
-    })
-     
-  
-    
+    //   this.userService.get(this.userId).valueChanges().subscribe(x=>{
+    //     console.log(x.isAdmin);
+    //   })
+    // })
     
   }
 

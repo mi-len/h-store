@@ -3,6 +3,7 @@ import { OrderService } from 'src/app/shared/services/order.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -13,11 +14,13 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   orders
   userId
   ordersSubscription: Subscription
+  name
   
   constructor( 
     private orderService: OrderService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
     ) {
   }
 
@@ -43,5 +46,13 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
 
   deleteOrder(id) {
     return this.orderService.deleteOrder(id)
+  }
+
+  async getUserName(id){
+    console.log('id adm ord ',id)
+    this.name = await this.userService.getUserName(id)
+    console.log('last ', this.name);
+    
+    
   }
 }

@@ -1,3 +1,7 @@
 .sticky-top {
   top: 80px;
 }
+
+.sidebarM {
+  min-width: 150px;
+}

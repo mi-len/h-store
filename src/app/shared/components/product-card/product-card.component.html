@@ -1,68 +1,27 @@
-<!-- <div *ngIf="product.payload.val()['title']"  class="card" >
-  <img 
-    *ngIf="product.payload.val()['imageUrl']" 
-    [src]="product.payload.val()['imageUrl']" 
-    class="card-img-top" 
-    alt="...">
+<div *ngIf="product.payload.val()['title']" class="card">
+  <img *ngIf="product.payload.val()['imageUrl']" [src]="product.payload.val()['imageUrl']" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{ product.payload.val()['title'] }}</h5>
     <p class="card-text">{{ product.payload.val()['price'] | currency:'USD':tue }}</p>
   </div>
   <div *ngIf="showActions" class="card-footer">
-    <button 
-    *ngIf="this.productCount === 0; else updateQuantity"
-      (click)="addToCart()" 
+    <button *ngIf="this.productCount === 0; else updateQuantity" (click)="this.shoppingCartService.addToCart(product)"
       class="btn btn-secondary btn-block">Add to Cart</button>
-    <ng-template #updateQuantity> -->
+    <ng-template #updateQuantity>
 
-        <!-- <app-product-quantity [quantity]="this.productCount" [id]="this.id"></app-product-quantity> -->
-<!-- 
+      <!-- <app-product-quantity [quantity]="this.productCount" [id]="this.id"></app-product-quantity> -->
+
       <div class="row n0-gutters">
         <div class="col-2">
-          <button (click)='removeFromCart()' class="btn btn-secondary btn-block">-</button>
+          <button (click)='addToCart(product.key)' class="btn btn-secondary btn-block">-</button>
         </div>
         <div class="col text-center">
           {{ this.productCount }} in cart
         </div>
         <div class="col-2">
-          <button (click)="addToCart()" class="btn btn-secondary btn-block">+</button>
+          <button (click)="removeFromCart(product.key)" class="btn btn-secondary btn-block">+</button>
         </div>
       </div>
     </ng-template>
   </div>
-</div> -->
-
-
-<div *ngIf="product.payload.val()['title']"  class="card" >
-    <img 
-      *ngIf="product.payload.val()['imageUrl']" 
-      [src]="product.payload.val()['imageUrl']" 
-      class="card-img-top" 
-      alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{ product.payload.val()['title'] }}</h5>
-      <p class="card-text">{{ product.payload.val()['price'] | currency:'USD':tue }}</p>
-    </div>
-    <div *ngIf="showActions" class="card-footer">
-      <button 
-      *ngIf="this.productCount === 0; else updateQuantity"
-        (click)="this.shoppingCartService.addToCart(product)" 
-        class="btn btn-secondary btn-block">Add to Cart</button>
-      <ng-template #updateQuantity>
-        
-          <!-- <app-product-quantity [quantity]="this.productCount" [id]="this.id"></app-product-quantity> -->
-  
-        <div class="row n0-gutters">
-          <div class="col-2">
-            <button (click)='addToCart(product.key)' class="btn btn-secondary btn-block">-</button>
-          </div>
-          <div class="col text-center">
-            {{ this.productCount }} in cart
-          </div>
-          <div class="col-2">
-            <button (click)="removeFromCart(product.key)" class="btn btn-secondary btn-block">+</button>
-          </div>
-        </div>
-      </ng-template>
-    </div>
-  </div>
+</div>
