@@ -1,4 +1,6 @@
-# HStore
+# HStore - Organic Shop
+
+In order to ensure access to all the functionality admin check is disable. All users have admin right.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
 
